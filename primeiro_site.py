@@ -1,17 +1,17 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-import pyodbc 
+#import pyodbc 
 
 app = Flask(__name__)
 app.secret_key = 'secret_key'
 
 
-conexao = pyodbc.connect("DRIVER={SQL Server};SERVER=localhost;PORT=1433;DATABASE=master;UID=sa;PWD=Abc,1234")
+"""conexao = pyodbc.connect("DRIVER={SQL Server};SERVER=localhost;PORT=1433;DATABASE=master;UID=sa;PWD=Abc,1234")
 
 cur = conexao.cursor().execute("select usuario, senha from users")
 
 for row in cur.fetchall():
     print(row.usuario)
-    print(row.senha)
+    print(row.senha)"""
 
 # Dummy user database
 users = {

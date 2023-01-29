@@ -1,19 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from datetime import timedelta
-#import pyodbc 
+from Classes import conexoes
+
 
 app = Flask(__name__)
 app.secret_key = 'secret_key'
 app.permanent_session_lifetime = timedelta(minutes=5)
 
-
-"""conexao = pyodbc.connect("DRIVER={SQL Server};SERVER=localhost;PORT=1433;DATABASE=master;UID=sa;PWD=Abc,1234")
-
-cur = conexao.cursor().execute("select usuario, senha from users")
-
-for row in cur.fetchall():
-    print(row.usuario)
-    print(row.senha)"""
+bd = conexoes.Conexoes()
 
 # Dummy user database
 users = {
@@ -38,7 +32,7 @@ def login():
         password = request.form["password"]
 
         # Check if the user exists and the password is correct
-        if username in users and users[username] == password:
+        if bd.validUser(username, password):
             session['username'] = username
             return redirect(url_for("images"))
         else:

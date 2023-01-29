@@ -1,8 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for, session
+from datetime import timedelta
 #import pyodbc 
 
 app = Flask(__name__)
 app.secret_key = 'secret_key'
+app.permanent_session_lifetime = timedelta(minutes=5)
 
 
 """conexao = pyodbc.connect("DRIVER={SQL Server};SERVER=localhost;PORT=1433;DATABASE=master;UID=sa;PWD=Abc,1234")
@@ -29,6 +31,7 @@ def home():
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
+    
     if request.method == "POST":
         # Get the username and password from the form
         username = request.form["username"]
@@ -39,7 +42,7 @@ def login():
             session['username'] = username
             return redirect(url_for("images"))
         else:
-            return "senha inválida <a href='/login'> Voltar </a>"
+            return render_template("login.html",invalido = "Senha inválida*" )
     else:
         return render_template("login.html")
 

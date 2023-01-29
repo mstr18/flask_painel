@@ -1,20 +1,20 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from datetime import timedelta
-from Classes import conexoes
+from Classes.conexoes import Conexoes
 
 
 app = Flask(__name__)
 app.secret_key = 'secret_key'
 app.permanent_session_lifetime = timedelta(minutes=5)
 
-bd = conexoes.Conexoes()
+bd = Conexoes()
 
 # Dummy user database
-users = {
-    'user1': 'p1',
-    'user2': 'p2',
-    'user3': 'p3'
-}
+#users = {
+#    'user1': 'p1',
+#   'user2': 'p2',
+#    'user3': 'p3'
+#}
 
 @app.route("/")
 def home():

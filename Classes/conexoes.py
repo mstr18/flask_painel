@@ -1,7 +1,8 @@
 import pyodbc
 
 class Conexoes:
-
+    
+    #conn = pyodbc.connect("DRIVER={SQL Server};SERVER=localhost;PORT=1433;DATABASE=master;UID=sa;PWD=Abc,1234")
     def __init__(self):
         self.conn = pyodbc.connect("DRIVER={SQL Server};SERVER=localhost;PORT=1433;DATABASE=master;UID=sa;PWD=Abc,1234")
 

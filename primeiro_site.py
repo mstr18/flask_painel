@@ -19,7 +19,7 @@ bd = Conexoes()
 @app.route("/")
 def home():
     if 'username' in session:
-        redirect(url_for("images"))
+        return redirect(url_for("index"))
     else:
         return render_template("login.html")
 
@@ -34,23 +34,39 @@ def login():
         # Check if the user exists and the password is correct
         if bd.validUser(username, password):
             session['username'] = username
-            return redirect(url_for("images"))
+            return redirect(url_for("index"))
         else:
             return render_template("login.html",invalido = "Senha inválida*" )
     else:
         return render_template("login.html")
 
-@app.route("/images")
-def images():
+@app.route("/index")
+def index():
      if 'username' in session:
          return render_template("index.html")
      else:
          return "sesssão expirada <a href='/login'> Voltar </a>"
+     
+@app.route("/generic")
+def generic():
+     if 'username' in session:
+         return render_template("generic.html")
+     else:
+         return "sesssão expirada <a href='/login'> Voltar </a>"
         
+@app.route("/elements")
+def elements():
+     if 'username' in session:
+         return render_template("elements.html")
+     else:
+         return "sesssão expirada <a href='/login'> Voltar </a>"
+
 @app.route("/logout")
 def logout():
     session.pop('username', None)
     return redirect(url_for("home"))
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)

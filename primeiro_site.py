@@ -43,7 +43,7 @@ def login():
 @app.route("/images")
 def images():
      if 'username' in session:
-         return render_template("images_match.html")
+         return render_template("index.html")
      else:
          return "sesssão expirada <a href='/login'> Voltar </a>"
         

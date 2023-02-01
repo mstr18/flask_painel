@@ -11,7 +11,7 @@ bd = Conexoes()
 
 # Dummy user database
 #users = {
-#    'user1': 'p1',
+#    'user1': 'p1',sudo pip install 
 #   'user2': 'p2',
 #    'user3': 'p3'
 #}

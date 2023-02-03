@@ -16,20 +16,21 @@ class Conexoes:
         return self.conn
     
     def insertUser(u,p,e, self)
+        
         regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
-
         if(re.search(regex,e)):  
                     
-                    password = p.encode() 
-                    salt = bcrypt.gensalt()
-                    password_hash = bcrypt.hashpw(password, salt)
-                    #Validar senha!!!! terminar código
-                    self.conn.cursor().execute(f"insert into dbo.users values ('{u}', '{password_hash}', '{e}');")
-                    self.conn.commit() 
-                    return True
+            password = p.encode() 
+            salt = bcrypt.gensalt()
+            password_hash = bcrypt.hashpw(password, salt)
+             #Validar senha!!!! terminar código
+            self.conn.cursor().execute(f"insert into dbo.users values ('{u}', '{password_hash}', '{e}');")
+            self.conn.commit() 
+            return True
+        
         else:  
-                    print("Invalid Email")  
-                    return False
+            print("Invalid Email")  
+            return False
     
     def validUser(self, u, p):
         cursor = self.conn.cursor().execute(f"select usuario, senha from dbo.users where usuario like '{u}' and senha like '{p}'")

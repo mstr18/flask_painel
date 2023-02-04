@@ -11,7 +11,7 @@ class Conexoes:
         except pyodbc.Error as err:
             return print(f"Erro na conexao com o banco de dados: {err}")
         
-    def getConn(self):
+    def __getConn(self):
 
         return self.conn
     

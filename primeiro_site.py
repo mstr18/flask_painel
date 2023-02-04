@@ -67,15 +67,16 @@ def logout():
 @app.route("/register", methods=["POST", "GET"])
 def register():
 
-    regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
-    #if(re.search(regex,email)):  validação, se True, email OK
-         
     if request.method == "POST":
             # Get the username and password from the form
             username = request.form["username"]
             password = request.form["password"]
             passwordconfirm = request.form["passwordconfirm"]
             email = request.form["email"]
+            status = bd.insertUser(username, password, passwordconfirm, email)
+            if (status):
+                 return render_template("login.html")
+            else: return render_template("register.html", invalido = "Erro: Senha ou email invalidos")
 
      #adicionar regras#
 

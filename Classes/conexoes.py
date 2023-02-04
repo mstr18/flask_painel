@@ -15,30 +15,64 @@ class Conexoes:
 
         return self.conn
     
-    def insertUser(u,p,e, self)
+    def verificaSenha(self, senha, confirmacao):
         
-        regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
-        if(re.search(regex,e)):  
-                    
-            password = p.encode() 
-            salt = bcrypt.gensalt()
-            password_hash = bcrypt.hashpw(password, salt)
-             #Validar senha!!!! terminar código
-            self.conn.cursor().execute(f"insert into dbo.users values ('{u}', '{password_hash}', '{e}');")
-            self.conn.commit() 
+        if senha != confirmacao:
+            return False        
+        if len(senha) < 8:
+            return False
+        if not re.search("[a-z]", senha):
+            return False
+        if not re.search("[A-Z]", senha):
+            return False
+        if not re.search("[0-9]", senha):
+            return False
+        if not re.search("[!@#%&*]", senha):
+            return False
+        return True
+    
+    def verificaEmail(self, email):
+         
+         regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
+         if re.search(regex,email):
+             return True
+         else: return False
+
+    def insertUser(self,u,p,c,e):
+        
+        if self.verificaEmail(e):  
+
+            if self.verificaSenha(p, c):        
+                password = p.encode() 
+                salt = bcrypt.gensalt()
+                password_hash = bcrypt.hashpw(password, salt)
+                hashed = password_hash.decode()
+                sql = f"insert into dbo.users values ('{u}', '{hashed}', '{e}');"
+                self.conn.cursor().execute(sql)
+                self.conn.commit() 
+            else:
+                return False
             return True
         
         else:  
-            print("Invalid Email")  
             return False
     
     def validUser(self, u, p):
-        cursor = self.conn.cursor().execute(f"select usuario, senha from dbo.users where usuario like '{u}' and senha like '{p}'")
+        sql = f"select usuario, senha from dbo.users where usuario like '{u}'"
+        cursor = self.conn.cursor().execute(sql)
         if cursor.rowcount == 0: 
+            cursor.close()
             return False
         else: 
-            cursor.close()
-            return True
+            for row in cursor:
+                senha = row[1]
+                if bcrypt.checkpw(p.encode('utf-8'), senha.encode('utf-8')): 
+                    cursor.close()
+                    return True  
+            else:
+                cursor.close() 
+                return False  
+            
         
     
 

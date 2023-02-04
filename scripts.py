@@ -10,7 +10,6 @@ app.secret_key = 'secret_key'
 app.permanent_session_lifetime = timedelta(minutes=5)
 
 
-#Inicializando classe de validação de usuários. Senhas ainda em plaintext
 bd = Conexoes()
 
 @app.route("/")

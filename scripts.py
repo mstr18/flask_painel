@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from datetime import timedelta
 from Classes.conexoes import Conexoes
-import re
 
 #import ipdb import para depuração
 
